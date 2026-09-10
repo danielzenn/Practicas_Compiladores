@@ -27,7 +27,7 @@ static void regex_push(regex* r, token_type type, char value) {
 }
 
 /* 
- * Libera la memoria utilizada por un regex
+ * Libera la memoria utilizada por un regex.
  */
 void free_regex(regex* r) {
     free(r->items);
