@@ -33,7 +33,7 @@ typedef struct {
     int accept;             /* estado de aceptación              */
 } nfa;
 
-/* Convierte una expresión regular en notación postfija con concatenación
+/* Convierte un regex en notación postfija con concatenación
  * explícita a un NFA equivalente.
  */
 nfa regex_to_nfa(regex r);
