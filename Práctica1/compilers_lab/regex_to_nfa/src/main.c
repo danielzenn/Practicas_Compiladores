@@ -14,11 +14,11 @@ void print_postfix(regex r)
     printf("\n");
 }
 
-void test_strings_stdin(const char *regex_str)
+void test_strings_stdin(const char* regex_str)
 {
     regex r = parse_regex(regex_str);
     nfa n = regex_to_nfa(r);
-
+    
     char buf[1024];
     while (fgets(buf, sizeof(buf), stdin))
     {
@@ -27,92 +27,41 @@ void test_strings_stdin(const char *regex_str)
         printf("%d", result ? 1 : 0);
     }
     printf("\n");
-
     free_nfa(&n);
+    free_regex(&r);
 }
 
-int serialize_nfa_from_regex(const char *regex_str, const char *output_path)
-{
-    regex r = parse_regex(regex_str);
-    nfa n = regex_to_nfa(r);
-
-    bool ok = save_nfa(&n, output_path);
-    free_nfa(&n);
-
-    if (!ok)
-    {
-        fprintf(stderr, "Error: No se pudo serializar el NFA en '%s'.\n", output_path);
-        return 1;
-    }
-
-    return 0;
-}
-
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     int opt;
     char regex_str[1024];
-    char *output_file = NULL;
-    int mode = 0;
 
-    while ((opt = getopt(argc, argv, "rto:")) != -1)
+    while ((opt = getopt(argc, argv, "rt")) != -1)
     {
         switch (opt)
         {
             case 'r':
-                if (mode != 0)
-                {
-                    fprintf(stderr, "Error: Solo puedes usar una opcion de modo entre -r, -t o -o.\n");
+                if (!fgets(regex_str, sizeof(regex_str), stdin))
                     return 1;
+                regex_str[strcspn(regex_str, "\r\n")] = '\0';
+                {
+                    regex r = parse_regex(regex_str);
+                    print_postfix(r);
+                    free_regex(&r);
                 }
-                mode = 'r';
-                break;
+                return 0;
             case 't':
-                if (mode != 0)
-                {
-                    fprintf(stderr, "Error: Solo puedes usar una opcion de modo entre -r, -t o -o.\n");
+                if (!fgets(regex_str, sizeof(regex_str), stdin))
                     return 1;
-                }
-                mode = 't';
-                break;
-            case 'o':
-                if (mode != 0)
-                {
-                    fprintf(stderr, "Error: Solo puedes usar una opcion de modo entre -r, -t o -o.\n");
-                    return 1;
-                }
-                mode = 'o';
-                output_file = optarg;
-                break;
+                regex_str[strcspn(regex_str, "\r\n")] = '\0';
+                test_strings_stdin(regex_str);
+                return 0;
             default:
-                fprintf(stderr, "Usage: %s -r | -t | -o <archivo.nfa>\n", argv[0]);
+                fprintf(stderr, "Usage: %s -r | -t\n", argv[0]);
                 return 1;
         }
     }
 
-    if (mode == 0)
-    {
-        fprintf(stderr, "Usage: %s -r | -t | -o <archivo.nfa>\n", argv[0]);
-        return 1;
-    }
-
-    if (!fgets(regex_str, sizeof(regex_str), stdin))
-    {
-        return 1;
-    }
-    regex_str[strcspn(regex_str, "\r\n")] = '\0';
-
-    if (mode == 'r')
-    {
-        print_postfix(parse_regex(regex_str));
-        return 0;
-    }
-
-    if (mode == 't')
-    {
-        test_strings_stdin(regex_str);
-        return 0;
-    }
-
-    return serialize_nfa_from_regex(regex_str, output_file);
+    fprintf(stderr, "Usage: %s -r | -t\n", argv[0]);
+    return 1;
 }
