@@ -6,7 +6,7 @@ Universidad Nacional Autónoma de México. Facultad de Ciencias
 
 ## Prácticas
 
-- [Práctica 01: De regex a NFA](./Práctica1/compilers_lab/regex_to_nfa/)
+- [Práctica 01: De regex a NFA](./Práctica1/)
 
 ## Autor
 

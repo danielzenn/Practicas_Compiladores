@@ -4,8 +4,6 @@ Flores Doniz Daniel
 
 ## Estructura del proyecto
 
-La implementación y los archivos de Docker están dentro de `compilers_lab/regex_to_nfa`:
-
 ```text
 compilers_lab/regex_to_nfa/
 ├── Dockerfile
