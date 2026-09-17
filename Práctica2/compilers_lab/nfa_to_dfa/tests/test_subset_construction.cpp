@@ -61,7 +61,7 @@ int main() {
         bool caso_ok = (r_nfa == esperado) && (r_dfa == esperado);
         std::cout << (caso_ok ? "PASS" : "FAIL")
                    << ": \"" << s << "\" esperado=" << esperado
-                   << " nfa=" << r_nfa << " dfa=" << r_dfa << "\n";
+                   << " NFA=" << r_nfa << " DFA=" << r_dfa << "\n";
         ok = ok && caso_ok;
     }
 

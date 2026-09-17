@@ -23,7 +23,7 @@ void print_dfa(const DFA& dfa) {
     std::cout << "Transiciones:\n";
     for (auto const& [key, to] : dfa.delta) {
         auto [from, sym] = key;
-        std::cout << "  D" << from << " con" << sym << "va a D" << to << "\n";
+        std::cout << "  D" << from << " con " << sym << " va a D" << to << "\n";
     }
 }
 

@@ -22,9 +22,9 @@ void print_nfa(const NFA& nfa) {
     std::cout << "Transiciones:\n";
     for (auto const& [key, destinations] : nfa.delta) {
         auto [from, sym] = key;
-        std::cout << "  " << from << " con"
+        std::cout << "  " << from << " con "
                    << (sym == EPSILON ? std::string("e") : std::string(1, sym))
-                   << "va a {";
+                   << " va a {";
         bool first = true;
         for (int d : destinations) {
             if (!first) std::cout << ", ";

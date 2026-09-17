@@ -38,7 +38,7 @@ int main() {
         bool ok = (r_nfa == r_dfa);
         all_ok = all_ok && ok;
         std::cout << "  \"" << s << "\"  ->  NFA=" << r_nfa << "  DFA=" << r_dfa
-                   << (ok ? "   OK" : "   *** Diferencia ***") << "\n";
+                   << (ok ? "   ok" : "   *** Diferencia ***") << "\n";
     }
 
     std::cout << (all_ok ? "\nEl NFA y el DFA son equivalentes.\n" : "\nHay diferencias entre el NFA y el DFA.\n");
